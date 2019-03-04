@@ -10,16 +10,14 @@ if encryptFile == "Y":
 elif encryptFile == "N":
     print("continue to functions")
 
-def welcome():
-    print("welcome to the software")
-
 def checkdetails():
     username = input("please enter your username: \n")
     password = input("please enter your password: \n")
     filename = input("Please enter the name of the csv file: \n")  
-    DecryptAns = input("Do you need to decrypt the file before using?: \n")
+    os.system("clear")
+    decryptAns = input("Do you need to decrypt the file before using?: (Y)es (any key)No\n")
     
-    if DecryptAns == "Y":
+    if decryptAns == "Y":
         EncryptFunction.Decrypt(filename)
 
     #reads csv file 
@@ -40,7 +38,19 @@ def checkdetails():
                 checkdetails()
 
         elif continueTo == True:
-            print("correct details")
+            os.system("clear")
             welcome()
+
+def welcome():
+    print("welcome to the software")
+    operationAns = input("what action would you like to perform on the csv file: \n\n1.Add an account \n2.Delete an account \n3.Edit an account\n")
+
+    if operationAns == '1':
+        print("add")
+    elif operationAns == '2':
+        print("delete")
+    elif operationAns == '3':
+        print("edit")
+
 
 checkdetails()
