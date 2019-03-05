@@ -3,6 +3,7 @@ import os
 import Encryption as EncryptFunction
 import Operations as ops
 
+
 encryptFile = input("Would you like to encrypt your .csv file (Y)es or (N)o: \n")
 
 if encryptFile == "Y":
@@ -25,11 +26,10 @@ def checkdetails():
     with open(filename, "r") as details_file:
         continueTo = False
         reader = csv.reader(details_file, delimiter=",")
-
         #reads each line which has a username and password and compares to use input
         for line in reader:
             if username == line[1] and password == line[2]:
-                #os.remove(filename)
+                os.remove(filename)
                 continueTo = True
         if continueTo == False:
             tryAgain = input("incorrect details, try again yes(1) or no(2)")
@@ -38,21 +38,21 @@ def checkdetails():
         elif continueTo == True:
             if "admin" in username:
                 os.system("clear")
-                AdminPanel(username)
+                AdminPanel(username, filename)
             else:
                 os.system("clear")
                 UserPanel(username)
 
-def AdminPanel(usrName):
+def AdminPanel(usrName, filename):
     print("welcome to the software: " + usrName)
     operationAns = input("what action would you like to perform on the csv file: \n\n1.Add an account \n2.Delete an account \n3.Edit an account\n")
 
     if operationAns == '1':
-        ops.Add()
+        ops.Add(filename)
     elif operationAns == '2':
-        ops.Delete()
+        ops.Delete(filename)
     elif operationAns == '3':
-        ops.Edit()
+        ops.Edit(filename)
 
 def UserPanel(usrName):
     print("welcome to the software: " + usrName)
