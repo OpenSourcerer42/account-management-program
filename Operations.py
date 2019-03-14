@@ -1,47 +1,31 @@
 import csv
+import os
 import pyAesCrypt
+import Encryption as EncryptionFunction
 
-def Add(filename):
+def Add(filename, Encryptpassword):
     bufferSize = 64 * 1024
-    ans = input("is the file being used encrypted Yes(1) or No(2) \n")
-    
-    if int(ans) == 1:
-        password = input("enter the password for the file to decrypt it")
-        pyAesCrypt.decryptFile(filename+".aes",filename, password, bufferSize)
-
-        rowIndex = 0
-        with open("details.csv", 'r') as csvFile:
-            reader = csv.reader(csvFile, delimiter=",")
-            for rows in reader:
-               rowIndex = int(rows[0])
+    password = input("enter the password for the file to decrypt it: \n")
+    pyAesCrypt.decryptFile(filename+".aes",filename, password, bufferSize)
+    os.remove(filename+".aes")
+    #delete the old encrypted file, hide the decrypted file and once you add something to it, encrypt the new csv file
+    rowIndex = 0
+    with open(filename, 'r') as csvFile:
+        reader = csv.reader(csvFile, delimiter=",")
+        for rows in reader:
+            rowIndex = int(rows[0])
             rowIndex += 1
-            csvFile.close()
+        csvFile.close()
             
-        username = input("enter username")
-        password = input("enter password")
-        print(str(rowIndex)+username+password)
-        #find a way to hide the decrypted file when adding a username and password to increase security
-        csvFile = open(filename, "a")
-        csvFile.write("\n"+str(rowIndex)+","+username+","+password)
-        csvFile.close()
-
-    elif int(ans) == 2:
-        rowIndex = 0
-        with open("details.csv", 'r') as csvFile:
-            reader = csv.reader(csvFile, delimiter=",")
-            for rows in reader:
-               rowIndex = int(rows[0])
-            rowIndex += 1
-            csvFile.close()
-
-        username = input("enter username")
-        password = input("enter password")
-        print(str(rowIndex)+username+password)
-
-        csvFile = open(filename, "a")
-        csvFile.write("\n"+str(rowIndex)+","+username+","+password)
-        csvFile.close()
-
+    username = input("enter username you want to add: \n")
+    password = input("enter password you want to add: \n")
+    print(str(rowIndex)+username+password)
+    csvFile = open(filename, "a")
+    csvFile.write("\n"+str(rowIndex)+","+username+","+password)
+    csvFile.close()
+    EncryptionFunction.Encrypt()
+    os.remove(filename)
+    
 def Edit(filename):
     print(filename)
 
