@@ -3,6 +3,7 @@ import os
 import Encryption as EncryptFunction
 import Operations as ops
 
+EncryptFunction.Encrypt()
 
 def checkdetails():
     username = input("please enter your username: \n")
