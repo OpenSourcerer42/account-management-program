@@ -3,7 +3,7 @@ import os
 import Encryption as EncryptFunction
 import Operations as ops
 
-EncryptFunction.Encrypt()
+#EncryptFunction.Encrypt()
 
 def checkdetails():
     username = input("please enter your username: \n")
@@ -18,7 +18,7 @@ def checkdetails():
         reader = csv.reader(details_file, delimiter=",")
         #reads each line which has a username and password and compares to use input
         for line in reader:
-            if username == line[1] and password == line[2]:
+            if username == line[0] and password == line[1]:
                 continueTo = True
                 os.remove("details.csv")
         if continueTo == False:
