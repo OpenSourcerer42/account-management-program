@@ -22,7 +22,20 @@ def Add(filename, Encryptpassword):
     os.remove(filename)
     
 def Edit(filename):
-    print(filename)
+    #decrypts the csv file so the user can delete an account
+    bufferSize = 64 * 1024
+    password = input("enter the password for the file to decrypt it: \n")
+    pyAesCrypt.decryptFile(filename+".aes",filename, password, bufferSize)
+    os.remove(filename+".aes")
+    #prompts user to choose what they would like to edit
+    passOrUser = input("Would you like to edit a username(1), password(2) or both(3)")
+    #reads csv file data into a pandas data frame
+    df = pd.read_csv(filename)
+    
+    
+    #re-encrypts the csv file
+    EncryptionFunction.Encrypt()
+    os.remove(filename)
 
 def Delete(filename):
     #decrypts the csv file so the user can delete an account
