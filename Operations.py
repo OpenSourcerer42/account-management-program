@@ -31,7 +31,46 @@ def Edit(filename):
     passOrUser = input("Would you like to edit a username(1), password(2) or both(3)")
     #reads csv file data into a pandas data frame
     df = pd.read_csv(filename)
-    
+    print(df)
+
+    if int(passOrUser) == 1:
+        editUsername = input("enter the username you want to edit: \n")
+        newUsername = input("enter the new username: \n")
+        #stores the index of the current username
+        index = df.loc[df['username'] == editUsername].index[0]
+        #stores current password
+        password = df.loc[index, 'password']
+        #creates a new row with index, new username and current password
+        newRow = df.loc[index]= [newUsername, password]
+        #adds the row to the dataframe at a specific index
+        df.append(newRow)
+        #stores dataframe in the csv file
+        df.to_csv(filename, index=False)
+
+        #code is the same for each condition but structured slightly differently for a different purpose
+    elif int(passOrUser) == 2:
+        editPassword = input("enter the password you want to edit: \n")
+        newPassword = input("enter the new password: \n")
+        
+        index = df.loc[df['password'] == editPassword].index[0]
+        username = df.loc[index, 'username']
+        newRow = df.loc[index] = [username, newPassword]
+
+        df.append(newRow)
+
+        df.to_csv(filename, index=False)
+
+    elif int(passOrUser) == 3:
+        editUsername = input("enter the username you want to edit: \n")
+        newUsername = input("enter the new username: \n")
+        
+        newPassword = input("enter the new password: \n")
+        index = df.loc[df['username'] == editUsername].index[0]
+        newRow = df.loc[index] = [newUsername, newPassword]
+
+        df.append(newRow)
+
+        df.to_csv(filename, index=False)
     
     #re-encrypts the csv file
     EncryptionFunction.Encrypt()
@@ -43,7 +82,7 @@ def Delete(filename):
     password = input("enter the password for the file to decrypt it: \n")
     pyAesCrypt.decryptFile(filename+".aes",filename, password, bufferSize)
     os.remove(filename+".aes")
-
+    
     delUserName = input("enter the username of the account you want to delete")
     #reads the csv file into a pandas data frame
     df = pd.read_csv(filename)
