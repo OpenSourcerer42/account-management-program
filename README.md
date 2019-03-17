@@ -9,7 +9,7 @@ Account management program written in python login as user or admin from account
 # What i learned
 In this small project i learned:
 
-- basic AES encryption techniques
+- basic AES(Advanced AES Encryption) encryption techniques
 - reading and writing to a csv file 
 - importing different python modules to use in my program
 - using pandas to manipulate data in a more efficient way 
